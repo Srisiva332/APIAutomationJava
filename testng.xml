@@ -1,0 +1,10 @@
+<suite name="Suite" >
+    <listeners>
+        <listener class-name ="Utilities.ExtentReportListner" />
+    </listeners>
+    <test name="test">
+        <classes>
+            <class name = "Tourist"></class>
+        </classes>
+    </test>
+</suite>
