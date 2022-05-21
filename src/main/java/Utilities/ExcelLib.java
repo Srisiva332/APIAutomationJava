@@ -136,7 +136,7 @@ public class ExcelLib {
     public Object[][] getTestdata(){
         int rowNum = 0;
         int colNum = 0;
-        String data[][] = new String[iterationCount][usedColumnsCount-1];
+        String data[][] = new String[iterationCount][usedColumnsCount-2];
 
         //Get the Test Data
         for(int i =testCaseStartRow; i <= testCaseEndRow; i++){
@@ -148,9 +148,9 @@ public class ExcelLib {
             if(row.getCell(1).getStringCellValue().equalsIgnoreCase("Yes")){
                 flag = true;
                 for(int j = 2; j < usedColumnsCount; j++){
-                    System.out.println("Cell content is : "+row.getCell(j).getStringCellValue());
-                    data[rowNum][colNum] = row.getCell(j).getStringCellValue();
-                    colNum++;
+                        System.out.println("Cell content is : " + row.getCell(j).getStringCellValue());
+                        data[rowNum][colNum] = row.getCell(j).getStringCellValue();
+                        colNum++;
                 }
             }
             if(flag){

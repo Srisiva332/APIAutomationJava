@@ -10,4 +10,6 @@ public class FrameworkConstants {
     public static final String DATA_FILE_PATH = "src/test/resources/TestData/TestData.xlsx";
     public static final String EXCEL_SHEET = "TestData";
 
+    public static String id = "";
+
 }

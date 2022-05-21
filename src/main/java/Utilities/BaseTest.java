@@ -21,5 +21,14 @@ public class BaseTest {
 
     }
 
+
+    public String UpdateBody(String body,String id)
+    {
+        StringBuffer str = new StringBuffer(body);
+        str.insert(1,"\"id\" :"+id+",");
+        return str.toString();
+
+    }
+
 }
 
