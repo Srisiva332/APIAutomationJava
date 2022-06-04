@@ -1,3 +1,4 @@
+import Utilities.ExcelLib;
 import api.RestMethod;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseBuilder;
@@ -8,8 +9,11 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+
+import java.lang.reflect.Method;
 
 import static api.SpecBuilder.getRequestSpec;
 import static api.SpecBuilder.getResponseSpec;
@@ -19,32 +23,42 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Spotify {
 
-    @Test
-    public void CreatePlaylist() {
-        String payload = "{\n" +
-                "  \"name\": \"Chandu's Playlist\",\n" +
-                "  \"description\": \"New playlist description\",\n" +
-                "  \"public\": false\n" +
-                "}";
+    @DataProvider(name="DataFromExcel")
+    public Object[][] data(Method m) throws Exception {
+        System.out.println(m.getName());
+        ExcelLib xl = new ExcelLib("Capture Customer Info API ", m.getName());
+        return xl.getTestdataMAD();
+    }
+
+    @Test(dataProvider="DataFromExcel", description="Create PlayList")
+    public void CreatePlaylist(String title, String description, String Expected_result, String payload, String expectedcode) {
+        System.out.println("Title : "+ title);
+        System.out.println("Description : "+ description);
+        System.out.println("Expected Result : "+ Expected_result);
+//        String payload = "{\n" +
+//                "  \"name\": \"Chandu's Playlist\",\n" +
+//                "  \"description\": \"New playlist description\",\n" +
+//                "  \"public\": false\n" +
+//                "}";
         Response response = RestMethod.post("/users/yv0gp1oce9zbixdi7g58tjcgb/playlists",payload);
         assertThat(response.statusCode(), equalTo(201));
     }
 
-    @Test
+    @Test(dataProvider="DataFromExcel", description="Get All Playlist")
     public void GetALLPlaylists()
     {
         Response response = RestMethod.get("/users/yv0gp1oce9zbixdi7g58tjcgb/playlists","");
         assertThat(response.statusCode(), equalTo(200));
     }
 
-    @Test
+    @Test(dataProvider="DataFromExcel", description="Get Playlist")
     public void GetPlaylist()
     {
         Response response = RestMethod.get("/playlists/3j2pHh3bW9tujO0CgEjjCq","");
         assertThat(response.statusCode(), equalTo(200));
     }
 
-    @Test
+    @Test(dataProvider="DataFromExcel", description="Update the Playlist")
     public void UpdatePlaylist()
     {
         Response response = RestMethod.put("/playlists/3j2pHh3bW9tujO0CgEjjCq");
