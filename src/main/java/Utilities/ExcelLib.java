@@ -22,6 +22,7 @@ public class ExcelLib {
     private int testCaseStartRow = 0;
     private int testCaseEndRow=0;
     private int usedColumnsCount = 0;
+    private int usedColumnsCountMAD = 0;
     private int iterationCount = 0;
 
 
@@ -38,6 +39,7 @@ public class ExcelLib {
         testCaseStartRow = getTestCaseStartRow();
         testCaseEndRow = getTestCaseEndRow();
         usedColumnsCount = getUsedColumnsCount();
+        usedColumnsCountMAD = getUsedColumnsCountMAD();
         System.out.println("usedColumnsCount+1 is "+usedColumnsCount);
         iterationCount = getIterationCount();
     }
@@ -107,6 +109,23 @@ public class ExcelLib {
         return (usedColumnsCount+1);
     }
 
+    private int getUsedColumnsCountMAD(){
+        try {
+            int count = 0;
+
+            row = worksheet.getRow(testCaseStartRow);
+
+            while(! row.getCell(count).getStringCellValue().equalsIgnoreCase("End")){
+                usedColumnsCountMAD = count++;
+            }
+            usedColumnsCountMAD=usedColumnsCountMAD-6;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("usedColumnsCount is : "+usedColumnsCountMAD);
+        return (usedColumnsCountMAD+1);
+    }
+
     private int getIterationCount(){
         try {
             for(int i =testCaseStartRow; i <= testCaseEndRow; i++){
@@ -151,6 +170,40 @@ public class ExcelLib {
                         System.out.println("Cell content is : " + row.getCell(j).getStringCellValue());
                         data[rowNum][colNum] = row.getCell(j).getStringCellValue();
                         colNum++;
+                }
+            }
+            if(flag){
+                rowNum++;
+            }
+        }
+
+        return data;
+    }
+
+    public Object[][] getTestdataMAD(){
+        int rowNum = 0;
+        int colNum = 0;
+        String data[][] = new String[iterationCount][usedColumnsCount-8];
+
+        //Get the Test Data
+        for(int i =testCaseStartRow; i <= testCaseEndRow; i++){
+            colNum = 0;
+            boolean flag = false;
+
+            row = worksheet.getRow(i);
+
+            if(row.getCell(1).getStringCellValue().equalsIgnoreCase("Yes")){
+                flag = true;
+                System.out.println("Cell content is : " + row.getCell(5).getStringCellValue());
+                data[rowNum][colNum++] = row.getCell(5).getStringCellValue();
+                System.out.println("Cell content is : " + row.getCell(9).getStringCellValue());
+                data[rowNum][colNum++] = row.getCell(9).getStringCellValue();
+                System.out.println("Cell content is : " + row.getCell(10).getStringCellValue());
+                data[rowNum][colNum++] = row.getCell(10).getStringCellValue();
+                for(int j = 11; j < usedColumnsCount; j++){
+                    System.out.println("Cell content is : " + row.getCell(j).getStringCellValue());
+                    data[rowNum][colNum] = row.getCell(j).getStringCellValue();
+                    colNum++;
                 }
             }
             if(flag){

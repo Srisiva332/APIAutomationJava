@@ -11,7 +11,7 @@ public class BaseTest {
     protected static RequestSpecification requestSpec;
     protected static ResponseSpecification responseSpec;
 
-    @BeforeSuite
+        @BeforeSuite
     public void setBaseURI() {
 
 

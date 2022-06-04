@@ -26,7 +26,7 @@ public class Tourist extends BaseTest {
 
     @Test(dataProvider="DataFromExcel", description="Get Tourist Details")
     public void GET_TouristDetails(String id, String ExpectedCode) throws IOException {
-        Response response = RestMethod.GET(requestSpec,"/api/Tourist",id) ;
+        Response response = RestMethod.get(requestSpec,"/api/Tourist",id) ;
         System.out.println(response.getBody().asString());
         Assert.assertEquals(response.getStatusCode(),Integer.parseInt(ExpectedCode));
 
@@ -34,7 +34,7 @@ public class Tourist extends BaseTest {
 
     @Test(dataProvider="DataFromExcel", description="Get Tourist Details")
     public void POST_CreateTourist(String body, String ExpectedCode) throws IOException {
-        Response response = RestMethod.POST(requestSpec,"/api/Tourist",body);
+        Response response = RestMethod.post(requestSpec,"/api/Tourist",body);
         System.out.println(response.getBody().asString());
         System.out.println(response.then().extract().path("id"));
         id = response.then().extract().path("id").toString();
@@ -43,9 +43,9 @@ public class Tourist extends BaseTest {
 
     @Test(dataProvider="DataFromExcel", description="Get Tourist Details")
     public void PUT_UpdateTourist(String Postbody, String PutBody, String ExpectedCode) throws IOException {
-        Response response = RestMethod.POST(requestSpec, "/api/Tourist", Postbody);
+        Response response = RestMethod.post(requestSpec, "/api/Tourist", Postbody);
         id = response.then().extract().path("id").toString();
-        response = RestMethod.PUT(requestSpec, "/api/Tourist", UpdateBody(PutBody, id), id);
+        response = RestMethod.put(requestSpec, "/api/Tourist", UpdateBody(PutBody, id), id);
         System.out.println(response.getBody().asString());
         Assert.assertEquals(response.getStatusCode(), Integer.parseInt(ExpectedCode));
     }
