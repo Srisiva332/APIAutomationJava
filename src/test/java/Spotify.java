@@ -35,16 +35,11 @@ public class Spotify {
         System.out.println("Title : "+ title);
         System.out.println("Description : "+ description);
         System.out.println("Expected Result : "+ Expected_result);
-//        String payload = "{\n" +
-//                "  \"name\": \"Chandu's Playlist\",\n" +
-//                "  \"description\": \"New playlist description\",\n" +
-//                "  \"public\": false\n" +
-//                "}";
         Response response = RestMethod.post("/users/yv0gp1oce9zbixdi7g58tjcgb/playlists",payload);
         assertThat(response.statusCode(), equalTo(201));
     }
 
-    @Test(dataProvider="DataFromExcel", description="Get All Playlist")
+    @Test//(dataProvider="DataFromExcel", description="Get All Playlist")
     public void GetALLPlaylists()
     {
         Response response = RestMethod.get("/users/yv0gp1oce9zbixdi7g58tjcgb/playlists","");
