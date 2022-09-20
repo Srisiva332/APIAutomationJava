@@ -1,3 +1,5 @@
+package com.Tourist;
+
 import Utilities.BaseTest;
 import Utilities.PropertyReader;
 import io.restassured.RestAssured;

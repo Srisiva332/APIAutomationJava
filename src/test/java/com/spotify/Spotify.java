@@ -1,3 +1,5 @@
+package com.spotify;
+
 import Utilities.ExcelLib;
 import api.RestMethod;
 import io.restassured.builder.RequestSpecBuilder;
